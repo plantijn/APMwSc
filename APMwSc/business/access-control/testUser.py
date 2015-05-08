@@ -16,6 +16,15 @@ class TestcslRole(unittest.TestCase):
     # Caso Inicial
  
      # Prueba 1
-     def test1InsertExists(self):
-         role = clsRole()
-         role.insertRole('Product Owner')  
+    def test1InsertExists(self):
+        role = clsRole()
+        role.insertRole('Scrum Master')  
+    
+    def test2InsertExists(self):
+        role = clsRole()
+        role.insertRole('Product Owner')  
+         
+    def test1ModifyNameRole(self):
+        role = clsRole()
+        role.modifyNameRole('Product Owner','Team Member' )
+    

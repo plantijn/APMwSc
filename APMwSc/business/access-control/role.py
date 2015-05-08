@@ -64,7 +64,19 @@ class clsRole(object):
         pass
                 
     def modifyNameRole(self, name, newNameRole):
-        pass   
+        validname    = (type(name) == str)
+        validnewname = (type(newNameRole) == str)  
+        if ((validname) and (validnewname)):
+            lengthname    = CONST_MINLEN <= len(name) <= CONST_MAXLEN
+            lengthnewname = CONST_MINLEN <= len(newNameRole) <= CONST_MAXLEN
+            if ((lengthname) and (lengthnewname)):
+                found1 = self.findNameRole(name)
+                found2 = self.findNameRole(newNameRole)
+                if (found1 != []) and (found2 == []):
+                    session.query(model.Role).filter(model.Role.namerole == name).update({'namerole':(newNameRole)})
+                    session.commit()
+                    return True
+        return False    
         
     def deleteIdRole(self, id):
         pass
