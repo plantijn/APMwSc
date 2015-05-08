@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-. 
 '''
 Created on 03/5/2015
-@author: Carlos
-         Luis Colorado
+
+@author: Carlos Plantijn 10-10572
+@author: Luis Colorado   09-11086
          
 Descripción: 
 '''

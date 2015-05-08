@@ -3,7 +3,7 @@
 Created on 08/05/2015
 
 @author: Carlos Plantijn 10-10572
-         Luis Colorado   09-11086
+@author: Luis Colorado   09-11086
          
 Descripción: Defición de la clase clsRole que contiene los métodos necesarios para
              administrar los roles que juegan los usuaros del sistema.
@@ -61,7 +61,21 @@ class clsRole(object):
                     inserted = self.findIdRole(newrole.idrole)
                     return (inserted != [])
         return False
-                 
+
+    def modifyNameRole(self, name, newNameRole):
+        validname    = (type(name) == str)
+        validnewname = (type(newNameRole) == str)  
+        if ((validname) and (validnewname)):
+            lengthname    = CONST_MINLEN <= len(name) <= CONST_MAXLEN
+            lengthnewname = CONST_MINLEN <= len(newNameRole) <= CONST_MAXLEN
+            if ((lengthname) and (lengthnewname)):
+                found1 = self.findNameRole(name)
+                found2 = self.findNameRole(newNameRole)
+                if (found1 != []) and (found2 == []):
+                    session.query(model.Role).filter(model.Role.namerole == name).update({'namerole':(newNameRole)})
+                    session.commit()
+                    return True
+        return False    
         
     def deleteIdRole(self, id):
         pass
