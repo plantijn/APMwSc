@@ -11,8 +11,7 @@ Descripcion: Definicion de la clase clsDpt junto a sus metodos para
 '''
 
 
-# Librerias a utilizar.
-
+# Librerias a utilizar
 import os
 import sys
 

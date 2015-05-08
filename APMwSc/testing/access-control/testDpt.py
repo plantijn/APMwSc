@@ -1,3 +1,12 @@
+'''
+Created on 08/05/2015
+
+@author: Carlos Plantijn 10-10572
+@author: Luis Colorado   09-11086
+         
+Descripcion: 
+'''
+
 import unittest
 import os
 import sys
