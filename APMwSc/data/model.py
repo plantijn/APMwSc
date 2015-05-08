@@ -70,6 +70,7 @@ class Role(db):
      idrole    = Column(Integer, primary_key = True)
      namerole  = Column(String(50), index = True, unique = True)
      usersrole = relationship('User', backref = 'role', cascade = "all, delete, delete-orphan")
+     CheckConstraint(namerole in ('Product Owner','Scrum Master', 'Team member'), name='check_namerole')
           
      def __init__(self, namerole):
          self.namerole = namerole 
