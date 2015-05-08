@@ -60,8 +60,7 @@ class Dpt(db):
      namedpt  = Column(String(50), index = True, unique = True)
      usersdpt = relationship('User', backref = 'dpt', cascade = "all, delete, delete-orphan")
      
-     def __init__(self, iddpt, namedpt):
-         self.iddpt   = iddpt
+     def __init__(self, namedpt):
          self.namedpt = namedpt
          
 # Definicion modelo rol.
