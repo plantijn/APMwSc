@@ -30,8 +30,8 @@ class TestcslRole(unittest.TestCase):
         #role.modifyNameRole('Scrum Master', 'Team Member')
         #role.modifyNameRole('Team Member', 'Scrum Master')
         role.modifyNameRole('Product Owner', 'Team Member')
-        
+    '''    
     def test4DeleteIdRole(self):
         role = clsRole()
         role.deleteIdRole(1)
-    
+    '''
