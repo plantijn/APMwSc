@@ -1,46 +1,47 @@
+# -*- coding: utf-8 -*-. 
 '''
-Created on 08/05/2015
-
-@author: Carlos Plantijn 10-10572
-@author: Luis Colorado   09-11086
+Created on 09/5/2015
+@author: Carlos Plantijn
+         Luis Colorado
          
-Descripcion: Definicion de la clase clsUser junto a sus metodos para
-             administrar los usuarios del sistema.
+Descripción: 
 '''
 
-# Librerias a utilizar
+# Librerías a utilizar.
+
 import os
 import sys
+from _ast import Str
 
-# Ruta que permite utilizar el modulo model.py
+# Ruta que permite utilizar el módulo model.py
 sys.path.append('../../data')
 import model
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-# Declaracion de constantes
-CONST_MINLENGTH = 1
-CONST_MINPASSWD = 8
-CONST_MAXFULLNAME = 50
-CONST_MAXUSERNAME = 16
-CONST_MAXPASSWD = 16
-CONST_MAXEMAIL = 30
- 
- # Conexion con la base de datos 
+# Declaración de constantes
+CONST_MINLEN = 1
+CONST_FULLNAME_MAXLEN = 50
+CONST_USERNAME_MAXLEN = 16
+CONST_PASSWORD_MINLEN = 8
+CONST_PASSWORD_MAXLEN = 16
+CONST_EMAIL_MAXLEN    = 30 
+
+# Conexión con la base de datos. 
 dbsession = sessionmaker(bind= model.engine)
 session   = dbsession()
- 
+
+
 class clsUser(object):
-    
-    def findUsername(self, username):
-        """Permite buscar a un usuario por su username en la base de datos"""
-        if type(username) == str:
-            if len(username) >= CONST_MINLENGTH and len(username) <= CONST_MAXUSERNAME:
-                found = session.query(model.User).filter(model.User.username==username).all()
+
+    def findUserName(self, name):
+        """Permite buscar un elemento en la base de datos"""
+        if type(name) == str:
+            if len(name) >= CONST_MINLEN and len(name) <= CONST_USERNAME_MAXLEN:
+                found = session.query(model.User).filter(model.User.username==name).all()
                 return found
         return([])
-
 
     def insertUser(self, fullname, username, password, email, iddpt, idrole):
         """Permite insertar un nuevo usuario en la base de datos"""
@@ -58,10 +59,10 @@ class clsUser(object):
         if checkconditions:
 
             # Chequeo de la longitud de los parámetros
-            checkfullname = CONST_MINLENGTH <= len(fullname) <= CONST_MAXFULLNAME
-            checkusername = CONST_MINLENGTH <= len(username) <= CONST_MAXUSERNAME
-            checkpassword = CONST_MINPASSWD <= len(password) <= CONST_MAXPASSWD
-            checkemail    = CONST_MINLENGTH <= len(email) <= CONST_MAXEMAIL
+            checkfullname = CONST_MINLEN <= len(fullname) <= CONST_FULLNAME_MAXLEN
+            checkusername = CONST_MINLEN <= len(username) <= CONST_USERNAME_MAXLEN
+            checkpassword = CONST_PASSWORD_MINLEN <= len(password) <= CONST_PASSWORD_MAXLEN
+            checkemail    = CONST_MINLEN <= len(email) <= CONST_EMAIL_MAXLEN
                        
             checkconditions = checkfullname and checkusername and checkpassword and checkemail
 
@@ -75,39 +76,51 @@ class clsUser(object):
                     inserted = self.findUserName(newuser.username)
                     return (inserted != [])
         return False
-    
-    def modifyUser(self, fullname, username, password, email, iddpt, idrole):       
-        """Permite modificar"""
-        # Verificacion de los tipos de los parametros del metodo
-        validFullname = type(fullname) == str
-        validUsermame = type(username) == str
-        validPassword = type(password) == str
-        validEmail = type(email) == str
-        validIddpt = type(iddpt) == int
-        validIdrole = type(idrole) == int
-        if ((validFullname) and (validUsermame) and (validPassword) and (validEmail) and (validIddpt) and (validIdrole)):
-            # Verificacion de la longitud de los parametros del metodo
-            lenFullname = CONST_MINLENGTH <= len(fullname) <= CONST_MAXFULLNAME
-            lenUsername = CONST_MINLENGTH <= len(username) <= CONST_MAXUSERNAME
-            lenPassword = CONST_MINPASSWD <= len(password) <= CONST_MAXPASSWD
-            lenEmail = CONST_MINLENGTH <= len(email) <= CONST_MAXEMAIL
-            
-        # buscar username
-        
-        # si existe 
-        
-        # buscar iddpt
-        
-        # buscar idrole
-        
-        # si existen, hacemos update de todos los parametros
-        
-        
-        
-    def deleteUser(self, username):
-        pass
 
-if __name__ == '__main__':
-    a = clsUser()
-    a.insertUser('Luis', 'oskcolorado', '123456', 'oskcolorado@gmail.com', 1, 1)
-    print("Hola")
+    def modifyUserName(self, newfullname, username, newpassword, newemail, newiddpt, newidrole):
+        """Permite modificar un usuario que esté en la base de datos"""
+
+        # Chequeo del tipo de dato de los parámetros
+        checkfullname = type(newfullname) == str
+        checkusername = type(username) == str
+        checkpassword = type(newpassword) == str
+        checkemail    = type(newemail) == str
+        checkiddpt    = type(newiddpt) == int
+        checkidrole   = type(newidrole) == int
+        
+        checkconditions = checkfullname and checkusername and checkpassword and checkemail and checkiddpt and checkidrole
+        
+        if checkconditions:
+
+            # Chequeo de la longitud de los parámetros
+            checkfullname = CONST_MINLEN <= len(newfullname) <= CONST_FULLNAME_MAXLEN
+            checkusername = CONST_MINLEN <= len(username) <= CONST_USERNAME_MAXLEN
+            checkpassword = CONST_MINLEN <= len(newpassword) <= CONST_PASSWORD_MAXLEN
+            checkemail    = CONST_MINLEN <= len(newemail) <= CONST_EMAIL_MAXLEN
+                       
+            checkconditions = checkfullname and checkusername and checkpassword and checkemail
+
+            if checkconditions:
+                findUserName = self.findUserName(username)
+                if findUserName != []:
+                    foundiddpt  = session.query(model.Dpt).filter(model.Dpt.iddpt == newiddpt).all()
+                    foundidrole = session.query(model.Role).filter(model.Role.idrole==newidrole).all()
+                    if (foundiddpt != [] and foundidrole != []):
+                        session.query(model.User).filter(model.User.username == username).update({'fullname':(newfullname)})
+                        session.query(model.User).filter(model.User.username == username).update({'password':(newpassword)})
+                        session.query(model.User).filter(model.User.username == username).update({'email':(newemail)})
+                        session.query(model.User).filter(model.User.username == username).update({'iddpt':(newiddpt)})
+                        session.query(model.User).filter(model.User.username == username).update({'idrole':(newidrole)})                        
+                        session.commit()
+                    return True
+        return False
+
+    def deleteUserName(self, username):
+        """Permite eliminar un elemento de la base de datos por identificador"""
+        if (type(username) == str):
+            findNameUser = self.findUserName(username)
+            if findNameUser != []:
+                session.query(model.User).filter(model.User.username == username).delete()
+                session.commit()
+                findNameUser = self.findUserName(username)
+                return (findNameUser == [])
