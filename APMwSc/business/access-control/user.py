@@ -124,3 +124,4 @@ class clsUser(object):
                 session.commit()
                 findNameUser = self.findUserName(username)
                 return (findNameUser == [])
+        return False

@@ -106,6 +106,7 @@ class TestclsUser(unittest.TestCase):
     def testDeleteNameExists(self):
         user = clsUser()
         user.deleteUserName("oskcolorado")
+        
 
     # Casos Normales
 
@@ -128,4 +129,9 @@ class TestclsUser(unittest.TestCase):
         user   = clsUser()
         result = user.deleteUserName(" ")
         self.assertFalse(result,"Válido")
+        
+    def testDeleteNameNotExists(self):
+        user = clsUser()
+        result = user.deleteUserName("josema19")
+        self.assertFalse(result, "Válido")
 
