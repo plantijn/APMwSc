@@ -60,8 +60,7 @@ class Dpt(db):
      namedpt  = Column(String(50), index = True, unique = True)
      usersdpt = relationship('User', backref = 'dpt', cascade = "all, delete, delete-orphan")
      
-     def __init__(self, iddpt, namedpt):
-         self.iddpt   = iddpt
+     def __init__(self, namedpt):
          self.namedpt = namedpt
          
 # Definicion modelo rol.
@@ -71,6 +70,7 @@ class Role(db):
      idrole    = Column(Integer, primary_key = True)
      namerole  = Column(String(50), index = True, unique = True)
      usersrole = relationship('User', backref = 'role', cascade = "all, delete, delete-orphan")
+     #CheckConstraint(namerole in ('Product Owner','Scrum Master', 'Team member'), name='check_namerole')
           
      def __init__(self, namerole):
          self.namerole = namerole 
