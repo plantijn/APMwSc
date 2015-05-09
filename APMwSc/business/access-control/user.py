@@ -43,7 +43,38 @@ class clsUser(object):
 
 
     def insertUser(self, fullname, username, password, email, iddpt, idrole):
-        pass
+        """Permite insertar un nuevo usuario en la base de datos"""
+        
+        # Chequeo del tipo de dato de los parámetros
+        checkfullname = type(fullname) == str
+        checkusername = type(username) == str
+        checkpassword = type(password) == str
+        checkemail    = type(email) == str
+        checkiddpt    = type(iddpt) == int
+        checkidrole   = type(idrole) == int
+        
+        checkconditions = checkfullname and checkusername and checkpassword and checkemail and checkiddpt and checkidrole
+        
+        if checkconditions:
+
+            # Chequeo de la longitud de los parámetros
+            checkfullname = CONST_MINLENGTH <= len(fullname) <= CONST_MAXFULLNAME
+            checkusername = CONST_MINLENGTH <= len(username) <= CONST_MAXUSERNAME
+            checkpassword = CONST_MINPASSWD <= len(password) <= CONST_MAXPASSWD
+            checkemail    = CONST_MINLENGTH <= len(email) <= CONST_MAXEMAIL
+                       
+            checkconditions = checkfullname and checkusername and checkpassword and checkemail
+
+            if checkconditions:
+                findUserName = self.findUserName(username)
+        
+                if findUserName == []:
+                    newuser = model.User(fullname,username,password,email,iddpt,idrole)
+                    session.add(newuser)
+                    session.commit()
+                    inserted = self.findUserName(newuser.username)
+                    return (inserted != [])
+        return False
     
     def modifyUser(self, fullname, username, password, email, iddpt, idrole):       
         """Permite modificar"""
@@ -75,3 +106,8 @@ class clsUser(object):
         
     def deleteUser(self, username):
         pass
+
+if __name__ == '__main__':
+    a = clsUser()
+    a.insertUser('Luis', 'oskcolorado', '123456', 'oskcolorado@gmail.com', 1, 1)
+    print("Hola")
