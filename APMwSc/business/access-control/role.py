@@ -50,7 +50,9 @@ class clsRole(object):
         
     def insertRole(self, namerole):
         """Permite insertar un nuevo rol en la base de datos"""
-        if type(namerole) == str:  # Verificacion de que el nombre sea de tipo String
+        if type(namerole) == str and (namerole == 'Scrum Master'
+                                       or namerole == 'Product Owner'
+                                       or namerole == 'Team Member'):  # Verificacion de que el nombre sea de tipo String
             if len(namerole) >= CONST_MINLENGTH and len(namerole) <= CONST_MAXLENGTH:  
                 findName = self.findNameRole(namerole)
         
@@ -61,6 +63,8 @@ class clsRole(object):
                     # Verificacion de que hemos agregado el nuevo rol
                     inserted = self.findIdRole(newrole.idrole)
                     return (inserted != [])
+                return False
+            return False
         return False
 
     def modifyNameRole(self, name, newNameRole):
@@ -68,7 +72,9 @@ class clsRole(object):
         # Verificacion de que los nombres de rol sean de tipo String
         validname    = (type(name) == str)
         validnewname = (type(newNameRole) == str)  
-        if ((validname) and (validnewname)):
+        if ((validname) and (validnewname)
+            and (newNameRole == 'Scrum Master' or newNameRole == 'Product Owner'
+                  or newNameRole == 'Team Member')):
             # Verificacion de la longitud de los nombre de los roles
             lengthname    = CONST_MINLENGTH <= len(name) <= CONST_MAXLENGTH
             lengthnewname = CONST_MINLENGTH <= len(newNameRole) <= CONST_MAXLENGTH
@@ -81,6 +87,8 @@ class clsRole(object):
                     session.query(model.Role).filter(model.Role.namerole == name).update({'namerole':(newNameRole)})
                     session.commit()
                     return True
+                return False
+            return False
         return False    
         
     def deleteIdRole(self, id):
@@ -91,4 +99,5 @@ class clsRole(object):
                 session.query(model.Role).filter(model.Role.idrole == id).delete()
                 session.commit()
                 return True
+            return False
         return False    
