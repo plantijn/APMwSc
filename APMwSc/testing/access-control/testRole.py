@@ -278,11 +278,6 @@ class TestcslRole(unittest.TestCase):
         result = role.deleteIdRole([MAXINT])  
         self.assertFalse(result)    
     
-    def test10_20_30_40_5DeleteIdRoleNotExist(self):
-        role = clsRole()
-        result = role.deleteIdRole()  
-        self.assertFalse(result) 
-        
         
         
         
