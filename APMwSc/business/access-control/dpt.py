@@ -39,6 +39,7 @@ class clsDpt(object):
             if len(name) >= CONST_MINLENGTH and len(name) <= CONST_MAXLENGTH:
                 found = session.query(model.Dpt).filter(model.Dpt.namedpt==name).all()
                 return found
+            return([])
         return([])
         
     def findIdDpt(self, id):
@@ -61,6 +62,8 @@ class clsDpt(object):
                     # Verificacion de que hemos agregado el nuevo departamento
                     inserted = self.findIdDpt(newdpt.iddpt)
                     return (inserted != [])
+                return False
+            return False
         return False
 
     def modifyNameDpt(self, name, newNameDpt):
@@ -81,6 +84,8 @@ class clsDpt(object):
                     session.query(model.Dpt).filter(model.Dpt.namedpt == name).update({'namedpt':(newNameDpt)})
                     session.commit()
                     return True
+                return False
+            return False
         return False    
         
     def deleteIdDpt(self, id):
@@ -91,4 +96,5 @@ class clsDpt(object):
                 session.query(model.Dpt).filter(model.Dpt.iddpt == id).delete()
                 session.commit()
                 return True
+            return False
         return False    
