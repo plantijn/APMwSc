@@ -17,13 +17,8 @@ sys.path.append('../../business/access-control')
 from dpt import clsDpt
 
 class TestcslRole(unittest.TestCase):
-
-    
-    #############################################      
-    #       Suite de Pruebas para Insert        #
-    #############################################
-    
-    # Caso Inicial
+   
+    # Pruebas para Insert
  
      # Prueba 1
     def test1InsertExists(self):
@@ -36,8 +31,6 @@ class TestcslRole(unittest.TestCase):
          
     def test3ModifyNameDpt(self):
         dpt = clsDpt()
-        #role.modifyNameRole('Scrum Master', 'Team Member')
-        #role.modifyNameRole('Team Member', 'Scrum Master')
         dpt.modifyNameDpt('Quimica', 'Estadistica')
          
     def test4DeleteIdDpt(self):

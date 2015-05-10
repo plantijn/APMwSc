@@ -56,7 +56,7 @@ class clsUser(object):
         
         checkconditions = checkfullname and checkusername and checkpassword and checkemail and checkiddpt and checkidrole
         
-        if checkconditions:
+        if checkconditions and (iddpt != 0) and (idrole != 0):
 
             # Chequeo de la longitud de los parámetros
             checkfullname = CONST_MINLEN <= len(fullname) <= CONST_FULLNAME_MAXLEN
@@ -75,6 +75,8 @@ class clsUser(object):
                     session.commit()
                     inserted = self.findUserName(newuser.username)
                     return (inserted != [])
+                return False
+            return False
         return False
 
     def modifyUserName(self, newfullname, username, newpassword, newemail, newiddpt, newidrole):
